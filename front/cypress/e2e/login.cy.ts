@@ -2,7 +2,6 @@ describe('Login spec', () => {
   it('Login successful', () => {
     cy.visit('/login');
 
-    // Mock la réponse du backend
     cy.intercept('POST', '/api/auth/login', {
       body: {
         token: 'fake-token',
@@ -15,14 +14,11 @@ describe('Login spec', () => {
       }
     });
 
-    // Mock des sessions après connexion
     cy.intercept('GET', '/api/session', []).as('session');
 
-    // Remplissage et soumission du formulaire
     cy.get('input[formControlName=email]').type('john.doe@example.com');
     cy.get('input[formControlName=password]').type('test!1234{enter}{enter}');
 
-    // Vérifie la redirection
     cy.url({ timeout: 10000 }).should('include', '/sessions');
   });
 
