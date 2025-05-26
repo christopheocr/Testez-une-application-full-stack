@@ -10,8 +10,7 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class UserMapperTest {
     private UserMapper userMapper;
@@ -163,4 +162,38 @@ public class UserMapperTest {
         assertEquals(user2.getCreatedAt(), userDto2.getCreatedAt());
         assertEquals(user2.getUpdatedAt(), userDto2.getUpdatedAt());
     }
+
+    @Test
+    void testToEntity_withNullInput() {
+        UserMapper mapper = Mappers.getMapper(UserMapper.class);
+
+        assertNull(mapper.toEntity((UserDto) null));
+    }
+
+    @Test
+    void testToDto_withNullInput() {
+        UserMapper mapper = Mappers.getMapper(UserMapper.class);
+
+        assertNull(mapper.toDto((User) null));
+    }
+
+    @Test
+    void testToEntityList_withNullInput() {
+        UserMapper mapper = Mappers.getMapper(UserMapper.class);
+
+        assertNull(mapper.toEntity((List<UserDto>) null));
+    }
+
+    @Test
+    void testToDtoList_withNullInput() {
+        UserMapper mapper = Mappers.getMapper(UserMapper.class);
+
+        assertNull(mapper.toDto((List<User>) null));
+    }
+
+
+
+
+
+
 }

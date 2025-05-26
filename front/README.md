@@ -70,3 +70,11 @@ Launching test:
 for following change:
 
 > npm run test:watch
+
+Generate coverage report:
+
+> npx jest --coverage
+
+Report is available here:
+
+> front/coverage/jest/lcov-report/index.html

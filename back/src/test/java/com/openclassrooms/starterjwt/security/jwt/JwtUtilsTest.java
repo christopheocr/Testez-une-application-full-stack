@@ -1,6 +1,7 @@
 package com.openclassrooms.starterjwt.security.jwt;
 
 import com.openclassrooms.starterjwt.security.services.UserDetailsImpl;
+import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -57,4 +58,26 @@ class JwtUtilsTest {
         boolean result = jwtUtils.validateJwtToken(malformedToken);
         assertFalse(result);
     }
+
+    @Test
+    void testMalformedToken() {
+        String malformedToken = "abc.def"; // non base64 -> MalformedJwtException
+        assertFalse(jwtUtils.validateJwtToken(malformedToken));
+    }
+
+    @Test
+    void testUnsupportedToken() {
+        String unsupportedToken = Jwts.builder()
+                .setPayload("{\"unsupported\":true}")
+                .signWith(SignatureAlgorithm.HS512, "testSecretKey123456789012345678901234567890")
+                .compact();
+        assertFalse(jwtUtils.validateJwtToken(unsupportedToken));
+    }
+
+    @Test
+    void testEmptyToken() {
+        assertFalse(jwtUtils.validateJwtToken(""));
+        assertFalse(jwtUtils.validateJwtToken(null));
+    }
+
 }

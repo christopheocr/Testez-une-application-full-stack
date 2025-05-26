@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -56,4 +57,48 @@ public class TeacherMapperTest {
         assertEquals(teacherDto.getCreatedAt(), teacher.getCreatedAt());
         assertEquals(teacherDto.getUpdatedAt(), teacher.getUpdatedAt());
     }
+
+    @Test
+    void testToEntityList() {
+        TeacherDto dto1 = new TeacherDto();
+        dto1.setId(1L);
+        dto1.setFirstName("John");
+        dto1.setLastName("Doe");
+
+        TeacherDto dto2 = new TeacherDto();
+        dto2.setId(2L);
+        dto2.setFirstName("Jane");
+        dto2.setLastName("Smith");
+
+        List<TeacherDto> dtoList = List.of(dto1, dto2);
+        List<Teacher> entityList = Mappers.getMapper(TeacherMapper.class).toEntity(dtoList);
+
+        assertEquals(2, entityList.size());
+        assertEquals("John", entityList.get(0).getFirstName());
+        assertEquals("Jane", entityList.get(1).getFirstName());
+    }
+
+
+    @Test
+    void testToDtoList() {
+        Teacher teacher1 = new Teacher();
+        teacher1.setId(1L);
+        teacher1.setFirstName("Tom");
+        teacher1.setLastName("Thumb");
+
+        Teacher teacher2 = new Teacher();
+        teacher2.setId(2L);
+        teacher2.setFirstName("Alice");
+        teacher2.setLastName("Wonder");
+
+        List<Teacher> teacherList = List.of(teacher1, teacher2);
+        List<TeacherDto> dtoList = Mappers.getMapper(TeacherMapper.class).toDto(teacherList);
+
+        assertEquals(2, dtoList.size());
+        assertEquals("Tom", dtoList.get(0).getFirstName());
+        assertEquals("Alice", dtoList.get(1).getFirstName());
+    }
+
+
+
 }

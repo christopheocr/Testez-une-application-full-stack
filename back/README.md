@@ -1,7 +1,23 @@
 # Yoga App !
 
 
-For launch and generate the jacoco code coverage:
-> mvn clean test
+# Tests & Couverture de code
 
-GL
+## Lancer les tests
+
+```bash
+mvn test
+````
+
+## Générer le rapport JaCoCo
+
+```bash
+mvn clean verify
+```
+
+Le rapport HTML sera disponible ici :
+
+```
+target/site/jacoco/index.html
+```
+

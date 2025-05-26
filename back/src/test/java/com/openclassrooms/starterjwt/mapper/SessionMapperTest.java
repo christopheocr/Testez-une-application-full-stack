@@ -21,8 +21,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
@@ -125,4 +124,51 @@ public class SessionMapperTest {
         assertEquals(sessionDto.getCreatedAt(), session.getCreatedAt());
         assertEquals(sessionDto.getUpdatedAt(), session.getUpdatedAt());
     }
+
+    @Test
+    void testToDtoList() {
+        Session session1 = new Session();
+        session1.setId(1L);
+        session1.setName("Session 1");
+        session1.setDescription("Description 1");
+        session1.setDate(new Date());
+        Teacher teacher = new Teacher(); teacher.setId(10L);
+        session1.setTeacher(teacher);
+        session1.setUsers(List.of());
+
+        Session session2 = new Session();
+        session2.setId(2L);
+        session2.setName("Session 2");
+        session2.setDescription("Description 2");
+        session2.setDate(new Date());
+        session2.setTeacher(null);
+        session2.setUsers(null);
+
+        List<SessionDto> dtos = sessionMapper.toDto(List.of(session1, session2));
+
+        assertEquals(2, dtos.size());
+        assertEquals("Session 1", dtos.get(0).getName());
+        assertEquals("Session 2", dtos.get(1).getName());
+        assertEquals(10L, dtos.get(0).getTeacher_id());
+        assertNull(dtos.get(1).getTeacher_id());
+    }
+
+    @Test
+    void testToDto_withNullTeacher() {
+        Session session = new Session();
+        session.setId(301L);
+        session.setName("No teacher");
+        session.setDescription("No teacher session");
+        session.setDate(new Date());
+        session.setTeacher(null);
+        session.setUsers(List.of());
+
+        SessionDto dto = sessionMapper.toDto(session);
+
+        assertNotNull(dto);
+        assertNull(dto.getTeacher_id());
+    }
+
+
+
 }
