@@ -49,9 +49,30 @@ By default the admin account is:
 
 #### E2E
 
-Launching e2e test:
+You can run the end-to-end (E2E) tests using Cypress in two different ways:
 
-> npm run e2e
+* **Option 1 – Interactive Mode (UI):**
+
+```bash
+npm run e2e
+```
+
+This will open the Cypress interface where you can run tests manually in a browser.
+
+* **Option 2 – Headless Mode (Console Output):**
+
+First, start the application:
+
+```bash
+ng serve
+```
+
+Then, run all E2E tests directly in the terminal:
+
+```bash
+npx cypress run
+```
+This mode runs tests in headless mode and displays the results in the console.
 
 Generate coverage report (you should launch e2e test before):
 
