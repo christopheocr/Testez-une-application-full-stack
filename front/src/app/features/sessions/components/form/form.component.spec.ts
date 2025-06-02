@@ -121,4 +121,25 @@ describe('FormComponent', () => {
     expect(mockMatSnackBar.open).toHaveBeenCalledWith('Session updated !', 'Close', { duration: 3000 });
     expect(mockRouter.navigate).toHaveBeenCalledWith(['sessions']);
   });
+
+  it('should redirect if user is not admin', () => {
+  mockSessionService.sessionInformation.admin = false;
+  const localFixture = TestBed.createComponent(FormComponent);
+  localFixture.componentInstance.ngOnInit();
+  expect(mockRouter.navigate).toHaveBeenCalledWith(['/sessions']);
+  });
+
+  it('should initialize form with empty values in create mode', () => {
+  mockRouter.url = '/sessions/create'; // Ne contient pas "update"
+  const localFixture = TestBed.createComponent(FormComponent);
+  const localComponent = localFixture.componentInstance;
+  localFixture.detectChanges();
+
+  expect(localComponent.onUpdate).toBe(false);
+  expect(localComponent.sessionForm?.value.name).toBe('');
+});
+
+
+
+
 });
