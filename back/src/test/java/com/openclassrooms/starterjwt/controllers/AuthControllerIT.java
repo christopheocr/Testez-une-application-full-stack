@@ -43,10 +43,10 @@ public class AuthControllerIT {
         SignupRequest signupRequest = new SignupRequest();
         signupRequest.setEmail("new@example.com");
         signupRequest.setFirstName("Jane");
-        signupRequest.setLastName("Doe"); // OK
-        signupRequest.setPassword("strongPass123"); // ✅ 6+ caractères
+        signupRequest.setLastName("Doe"); 
+        signupRequest.setPassword("strongPass123"); 
 
-        mockMvc.perform(post("/api/auth/register") // ✅ ajusté avec "/register"
+        mockMvc.perform(post("/api/auth/register") 
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(signupRequest)))
                 .andExpect(status().isOk())
@@ -64,10 +64,10 @@ public class AuthControllerIT {
         signupRequest.setLastName("Doe");
         signupRequest.setPassword("password123");
 
-        mockMvc.perform(post("/api/auth/register") // ✅ ajusté avec "/register"
+        mockMvc.perform(post("/api/auth/register") 
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(signupRequest)))
-                .andExpect(status().isBadRequest()) // ✅ car le contrôleur renvoie .badRequest()
+                .andExpect(status().isBadRequest()) 
                 .andExpect(jsonPath("$.message").value("Error: Email is already taken!"));
     }
 
