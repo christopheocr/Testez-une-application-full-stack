@@ -59,4 +59,18 @@ class UserDetailsImplTest {
         assertEquals(user1, user2);
         assertNotEquals(user1, user3);
     }
+    @Test
+    void equals_shouldHandleNullSelfAndOtherClassCases() {
+        UserDetailsImpl user = UserDetailsImpl.builder().id(1L).build();
+        UserDetailsImpl userWithNullId = UserDetailsImpl.builder().id(null).build();
+        UserDetailsImpl userWithNullId2 = UserDetailsImpl.builder().id(null).build();
+
+        assertEquals(user, user);
+        assertNotEquals(user, null);
+        assertNotEquals(user, "some string");
+        assertNotEquals(user, userWithNullId);
+        assertNotEquals(userWithNullId, user);
+        assertEquals(userWithNullId, userWithNullId2);
+    }
+
 }

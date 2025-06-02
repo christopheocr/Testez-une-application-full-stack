@@ -86,4 +86,23 @@ public class AuthTokenFilterTest {
         assertNull(SecurityContextHolder.getContext().getAuthentication());
         verify(chain).doFilter(request, response);
     }
+
+    @Test
+    void testParseJwt_withNullOrInvalidHeader() throws ServletException, IOException {
+        MockHttpServletRequest request1 = new MockHttpServletRequest();
+        MockHttpServletResponse response1 = new MockHttpServletResponse();
+        FilterChain chain1 = mock(FilterChain.class);
+
+        filter.doFilterInternal(request1, response1, chain1);
+        assertNull(SecurityContextHolder.getContext().getAuthentication());
+
+        MockHttpServletRequest request2 = new MockHttpServletRequest();
+        request2.addHeader("Authorization", "Token xyz.abc.def");
+        MockHttpServletResponse response2 = new MockHttpServletResponse();
+        FilterChain chain2 = mock(FilterChain.class);
+
+        filter.doFilterInternal(request2, response2, chain2);
+        assertNull(SecurityContextHolder.getContext().getAuthentication());
+    }
+
 }

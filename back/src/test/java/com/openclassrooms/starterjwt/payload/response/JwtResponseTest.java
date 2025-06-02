@@ -21,4 +21,6 @@ public class JwtResponseTest {
         assertEquals("last", jwtResponse.getLastName());
         assertTrue(jwtResponse.getAdmin());
     }
+
+
 }
