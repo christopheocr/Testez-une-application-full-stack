@@ -61,7 +61,7 @@ describe('MeComponent', () => {
         { provide: Router, useValue: mockRouter },
         { provide: MatSnackBar, useValue: mockMatSnackBar }
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA] // Ignore les balises Angular Material dans le HTML
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();
 
     fixture = TestBed.createComponent(MeComponent);
